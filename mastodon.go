@@ -62,8 +62,6 @@ type IMastodon interface {
 	PinAccountV1(c *gin.Context)
 	// UnpinAccountV1 for POST /api/v1/accounts/:id/unpin
 	UnpinAccountV1(c *gin.Context)
-	// NoteAccountV1 for POST /api/v1/accounts/:id/note
-	NoteAccountV1(c *gin.Context)
 	// GetAccountsRelationshipsV1 for GET /api/v1/accounts/relationships
 	GetAccountsRelationshipsV1(c *gin.Context)
 	// SearchAccountsV1 for GET /api/v1/accounts/search
@@ -71,8 +69,6 @@ type IMastodon interface {
 
 	// GetAccountsV1 for GET /api/v1/accounts
 	GetAccountsV1(c *gin.Context)
-	// GetAccountListsV1 for GET /api/v1/accounts/:id/lists
-	GetAccountListsV1(c *gin.Context)
 	// RemoveFollowerV1 for POST /api/v1/accounts/:id/remove_from_followers
 	RemoveFollowerV1(c *gin.Context)
 	// EndorseAccountV1 for POST /api/v1/accounts/:id/endorse
@@ -81,8 +77,6 @@ type IMastodon interface {
 	UnendorseAccountV1(c *gin.Context)
 	// SetAccountNoteV1 for POST /api/v1/accounts/:id/note
 	SetAccountNoteV1(c *gin.Context)
-	// CheckAccountRelationshipsV1 for GET /api/v1/accounts/relationships
-	CheckAccountRelationshipsV1(c *gin.Context)
 	// FindAccountFamiliarFollowersV1 for GET /api/v1/accounts/familiar_followers
 	FindAccountFamiliarFollowersV1(c *gin.Context)
 	// LookupAccountIDV1 for GET /api/v1/accounts/lookup
@@ -132,8 +126,6 @@ type IMastodon interface {
 	FeatureTagV1(c *gin.Context)
 	// UnfeatureTagV1 for DELETE /api/v1/featured_tags/:id
 	UnfeatureTagV1(c *gin.Context)
-	// GetTagSuggestionsV1 for GET /api/v1/featured_tags/suggestions
-	GetTagSuggestionsV1(c *gin.Context)
 	// GetFollowedTagsV1 for GET /api/v1/followed_tags
 	GetFollowedTagsV1(c *gin.Context)
 	// GetTagV1 for GET /api/v1/tags/:name
@@ -142,9 +134,9 @@ type IMastodon interface {
 	FollowTagV1(c *gin.Context)
 	// UnfollowTagV1 for POST /api/v1/tags/:name/unfollow
 	UnfollowTagV1(c *gin.Context)
-	// SetFeatureTagV1 for POST /api/v1/tags/:id/feature
+	// SetFeatureTagV1 for POST /api/v1/tags/:name/feature
 	SetFeatureTagV1(c *gin.Context)
-	// SetUnfeatureTagV1 for POST /api/v1/tags/:id/unfeature
+	// SetUnfeatureTagV1 for POST /api/v1/tags/:name/unfeature
 	SetUnfeatureTagV1(c *gin.Context)
 	// GetPreferencesV1 for GET /api/v1/preferences
 	GetPreferencesV1(c *gin.Context)
@@ -373,16 +365,13 @@ func Features(m IMastodon) (features *ginmill.Features) {
 	apiV1.POST("/accounts/:id/unmute", m.UnmuteAccountV1)
 	apiV1.POST("/accounts/:id/pin", m.PinAccountV1)
 	apiV1.POST("/accounts/:id/unpin", m.UnpinAccountV1)
-	apiV1.POST("/accounts/:id/note", m.NoteAccountV1)
 	apiV1.GET("/accounts/relationships", m.GetAccountsRelationshipsV1)
 	apiV1.GET("/accounts/:id/search", m.SearchAccountsV1)
 	apiV1.GET("/accounts", m.GetAccountsV1)
-	apiV1.GET("/accounts/:id/lists", m.GetAccountListsV1)
 	apiV1.POST("/accounts/:id/remove_from_followers", m.RemoveFollowerV1)
 	apiV1.POST("/accounts/:id/endorse", m.EndorseAccountV1)
 	apiV1.POST("/accounts/:id/unendorse", m.UnendorseAccountV1)
 	apiV1.POST("/accounts/:id/note", m.SetAccountNoteV1)
-	apiV1.GET("/accounts/relationships", m.CheckAccountRelationshipsV1)
 	apiV1.GET("/accounts/familiar_followers", m.FindAccountFamiliarFollowersV1)
 	apiV1.GET("/accounts/lookup", m.LookupAccountIDV1)
 
@@ -413,16 +402,13 @@ func Features(m IMastodon) (features *ginmill.Features) {
 	apiV1.GET("/featured_tags/suggestions", m.GetFeaturedTagSuggestionsV1)
 	apiV1.POST("/featured_tags", m.FeatureTagV1)
 	apiV1.DELETE("/featured_tags/:id", m.UnfeatureTagV1)
-	apiV1.GET("/featured_tags/suggestions", m.GetTagSuggestionsV1)
-	apiV1.DELETE("/featured_tags/:id", m.UnfeatureTagV1)
-	apiV1.GET("/featured_tags/suggestions", m.GetTagSuggestionsV1)
 	apiV1.GET("/followed_tags", m.GetFollowedTagsV1)
 
 	apiV1.GET("/tags/:name", m.GetTagV1)
 	apiV1.POST("/tags/:name/follow", m.FollowTagV1)
 	apiV1.POST("/tags/:name/unfollow", m.UnfollowTagV1)
-	apiV1.POST("/tags/:id/feature", m.SetFeatureTagV1)
-	apiV1.POST("/tags/:id/unfeature", m.SetUnfeatureTagV1)
+	apiV1.POST("/tags/:name/feature", m.SetFeatureTagV1)
+	apiV1.POST("/tags/:name/unfeature", m.SetUnfeatureTagV1)
 
 	apiV1.GET("/preferences", m.GetPreferencesV1)
 

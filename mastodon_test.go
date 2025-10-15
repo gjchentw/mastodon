@@ -176,7 +176,7 @@ func TestFeatures_Routes(t *testing.T) {
 	if features == nil {
 		t.Fatal("Features should not be nil")
 	}
-	// 檢查部分關鍵路由是否存在
+
 	want := []string{
 		"/oauth/authorize",
 		"/api/v1/accounts",
@@ -185,8 +185,8 @@ func TestFeatures_Routes(t *testing.T) {
 		"/api/v1/tags/:name/follow",
 	}
 	got := map[string]bool{}
-	// TODO: features should expose routes
-	for _, r := range features.Routes() {
+
+	for _, r := range features.GetRoutes() {
 		got[r.Path] = true
 	}
 	for _, path := range want {

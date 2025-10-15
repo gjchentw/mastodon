@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.7.7
-	github.com/ginmills/ginmill v1.0.1
+	github.com/ginmills/ginmill v1.1.0
 )
 
 require (
